@@ -1,39 +1,43 @@
-import { CartItem, Product } from './types';
+'use client';
+import { useState, useEffect } from 'react';
+import { CartItemType, Product } from './types';
 
-export const useCart = () => {
-  const getCart = (): CartItem[] => {
-    if (typeof window === 'undefined') return [];
-    return JSON.parse(localStorage.getItem('cart') || '[]');
-  };
+export function useCart() {
+  const [cart, setCart] = useState<CartItemType[]>([]);  // Empty initial for SSR
+
+  useEffect(() => {
+    // Only run on client after mount
+    const saved = localStorage.getItem('cart');
+    if (saved) {
+      setCart(JSON.parse(saved));
+    }
+  }, []);
+
   const addToCart = (product: Product) => {
-    const cart = getCart();
     const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const newCart = existing 
+      ? cart.map(item => 
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      : [...cart, { ...product, quantity: 1 }];
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
   };
+
   const updateQuantity = (id: number, quantity: number) => {
-    const cart = getCart();
-    const item = cart.find(item => item.id === id);
-    if (item) {
-      item.quantity = quantity;
-      if (quantity <= 0) {
-        const filtered = cart.filter(c => c.id !== id);
-        localStorage.setItem('cart', JSON.stringify(filtered));
-        return filtered;
-      }
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    return cart;
+    let newCart = cart.map(item => 
+      item.id === id ? { ...item, quantity } : item
+    ).filter(item => item.quantity > 0);
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
   };
+
   const getTotal = () => {
-    return getCart().reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   };
-  return { getCart, addToCart, updateQuantity, getTotal };
-};
+
+  return { cart, addToCart, updateQuantity, getTotal };
+}
 
 export const useWishlist = () => {
   const getWishlist = (): Product[] => {
