@@ -1,8 +1,6 @@
 "use client";
 import { Product } from "@/lib/types";
 import { useCart, useWishlist } from "@/lib/storage";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 
 interface Props {
   product: Product;
