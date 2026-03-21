@@ -1,9 +1,24 @@
-import Image from "next/image";
+import ProductCard from "@/components/feature/ProductCard";
+import { fetchProducts } from "@/lib/api";
+import { Product } from "../lib/types";
 
-export default function Home() {
+export default async function Home() {
+  let products: Product[] = [];
+  try {
+    products = await fetchProducts();
+  } catch (error) {
+    console.error(error);
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start"></main>
-    </div>
+    <main className="container mx-auto p-8">
+      <h1 className="text-4xl font-bold mb-8">Products</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+      {products.length === 0 && <p>No products available.</p>}
+    </main>
   );
 }
