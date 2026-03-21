@@ -1,6 +1,6 @@
 import ProductCard from "@/components/feature/ProductCard";
 import { fetchProducts } from "@/lib/api";
-import { Product } from "../lib/types";
+import { Product } from "../../lib/types";
 
 export default async function Home() {
   let products: Product[] = [];
