@@ -12,12 +12,12 @@ export default function ProductDetail({ product }: Props) {
   //const [loading, setLoading] = useState(true);
   //const [error, setError] = useState("");
   const { addToCart } = useCart();
-  const { toggleWishlist, getWishlist } = useWishlist();
+  const { toggleWishlist, wishlist } = useWishlist();
 
   //if (loading) return <p>Loading...</p>;
   //if (error || !product) return <p>Error: {error || "Product not found"}</p>;
 
-  const inWishlist = getWishlist().some((p) => p.id === product.id);
+  const inWishlist = wishlist.some((p) => p.id === product.id);
 
   return (
     <div className="container mx-auto p-8 max-w-4xl">

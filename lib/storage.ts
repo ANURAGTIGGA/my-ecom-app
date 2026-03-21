@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import { CartItemType, Product } from './types';
 
 export function useCart() {
-  const [cart, setCart] = useState<CartItemType[]>([]);  // Empty initial for SSR
+  const [cart, setCart] = useState<CartItemType[]>([]);
 
   useEffect(() => {
-    // Only run on client after mount
     const saved = localStorage.getItem('cart');
     if (saved) {
       setCart(JSON.parse(saved));
@@ -38,19 +37,23 @@ export function useCart() {
 
   return { cart, addToCart, updateQuantity, getTotal };
 }
+export function useWishlist() {
+  const [wishlist, setWishlist] = useState<Product[]>([]);
 
-export const useWishlist = () => {
-  const getWishlist = (): Product[] => {
-    if (typeof window === 'undefined') return [];
-    return JSON.parse(localStorage.getItem('wishlist') || '[]');
-  };
+  useEffect(() => {
+    const saved = localStorage.getItem('wishlist');
+    if (saved) setWishlist(JSON.parse(saved));
+  }, []);
+
   const toggleWishlist = (product: Product) => {
-    const wishlist = getWishlist();
-    const exists = wishlist.find(p => p.id === product.id);
+    const exists = wishlist.some(p => p.id === product.id);
     const newList = exists 
       ? wishlist.filter(p => p.id !== product.id)
       : [...wishlist, product];
+    setWishlist(newList);
     localStorage.setItem('wishlist', JSON.stringify(newList));
   };
-  return { getWishlist, toggleWishlist };
-};
+
+  return { wishlist, toggleWishlist };
+}
+
