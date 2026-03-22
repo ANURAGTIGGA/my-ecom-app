@@ -23,6 +23,12 @@ export function useCart() {
     localStorage.setItem('cart', JSON.stringify(newCart));
   };
 
+  const removeFromCart = (product: Product) => {
+    const filteredCart = cart.filter(item => item.id !== product.id);
+    setCart(filteredCart);
+    localStorage.setItem('cart', JSON.stringify(filteredCart));
+  };
+
   const updateQuantity = (id: number, quantity: number) => {
     let newCart = cart.map(item => 
       item.id === id ? { ...item, quantity } : item
@@ -35,8 +41,13 @@ export function useCart() {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   };
 
-  return { cart, addToCart, updateQuantity, getTotal };
+  const clearCart = () => {
+    localStorage.removeItem('cart');
+  }
+
+  return { cart, addToCart, updateQuantity, getTotal, removeFromCart, clearCart };
 }
+
 export function useWishlist() {
   const [wishlist, setWishlist] = useState<Product[]>([]);
 

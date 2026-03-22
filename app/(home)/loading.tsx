@@ -1,7 +1,7 @@
 export default function HomeLoading() {
   return (
     <div className="container mx-auto p-8">
-      <div className="text-4xl font-bold mb-8 bg-gradient-to-r from-gray-200 to-gray-300 bg-clip-text text-transparent animate-pulse">
+      <div className="text-2xl font-bold mb-8 bg-gradient-to-r from-gray-200 to-gray-300 bg-clip-text text-transparent animate-pulse">
         Products
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">

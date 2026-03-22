@@ -10,10 +10,32 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
-  const { addToCart } = useCart();
+  const { addToCart, cart, removeFromCart } = useCart();
   const { toggleWishlist, wishlist } = useWishlist();
   const router = useRouter();
   const inWishlist = wishlist.some((p) => p.id === product.id);
+  let cta;
+
+  const existing = cart.find((item) => item.id === product.id);
+  if (existing) {
+    cta = (
+      <button
+        onClick={() => removeFromCart(product)}
+        className="flex-1 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 cursor-pointer"
+      >
+        Remove from Cart
+      </button>
+    );
+  } else {
+    cta = (
+      <button
+        onClick={() => addToCart(product)}
+        className="flex-1 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 cursor-pointer"
+      >
+        Add to Cart
+      </button>
+    );
+  }
 
   return (
     <div className="flex flex-col border border-[#e6e3e3] rounded-lg p-4 shadow-md hover:shadow-lg transition">
@@ -30,12 +52,7 @@ export default function ProductCard({ product }: Props) {
       </p>
       <p className="text-2xl font-bold text-green-600 mt-2">${product.price}</p>
       <div className="flex flex-1 items-end gap-2 mt-4">
-        <button
-          onClick={() => addToCart(product)}
-          className="flex-1 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 cursor-pointer"
-        >
-          Add to Cart
-        </button>
+        {cta}
         <button
           onClick={() => toggleWishlist(product)}
           className="p-2 h-10 text-2xl cursor-pointer"

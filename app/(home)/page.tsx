@@ -1,13 +1,17 @@
 import ProductCard from "@/components/feature/ProductCard";
 import { fetchProducts } from "@/lib/api";
 import { Product } from "../../lib/types";
+import { notFound } from "next/navigation";
 
 export default async function Home() {
   let products: Product[] = [];
   try {
     products = await fetchProducts();
+    if (!products) {
+      notFound();
+    }
   } catch (error) {
-    console.error(error);
+    notFound();
   }
 
   return (

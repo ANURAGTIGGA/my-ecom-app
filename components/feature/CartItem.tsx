@@ -22,6 +22,7 @@ export default function CartItem({ item, onUpdate }: Props) {
         <p>${item.price}</p>
       </div>
       <div className="flex items-center gap-4">
+        <p>${item.price * item.quantity}</p>
         <button onClick={() => onUpdate(item.id, item.quantity - 1)}>-</button>
         <span>{item.quantity}</span>
         <button onClick={() => onUpdate(item.id, item.quantity + 1)}>+</button>

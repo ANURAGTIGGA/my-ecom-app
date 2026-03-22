@@ -4,14 +4,17 @@ import CartItem from "@/components/feature/CartItem";
 import Link from "next/link";
 
 export default function Cart() {
-  const { cart, updateQuantity, getTotal } = useCart(); // Now uses state, no direct localStorage
+  const { cart, updateQuantity, getTotal } = useCart();
 
   return (
     <main className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8">Shopping Cart</h1>
+      <h1 className="text-2xl font-bold mb-8">Shopping Cart</h1>
       {cart.length === 0 ? (
         <p>
-          Your cart is empty. <Link href="/">Shop now</Link>
+          Your cart is empty.{" "}
+          <Link href="/" className="text-blue-400">
+            Shop now
+          </Link>
         </p>
       ) : (
         <>

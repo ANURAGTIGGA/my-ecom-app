@@ -1,12 +1,12 @@
 import { fetchProduct } from "@/lib/api";
-import ProductDetail from "@/components/feature/ProductDetail"; // Move client logic to a new client component
+import ProductDetail from "@/components/feature/ProductDetail";
 
 interface Props {
-  params: Promise<{ id: string }>; // Awaitable params
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { id } = await params; // Await here
+  const { id } = await params;
   let product: any = null;
   let error = "";
 
