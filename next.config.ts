@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   images: {
-    remotePatterns: [new URL('https://fakestoreapi.com/img/**')],
+    remotePatterns: [new URL('https://fakestoreapi.com/img/**'), new URL('https://cdn.dummyjson.com/product-images/**')],
   },
 };
 
