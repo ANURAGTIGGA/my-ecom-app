@@ -1,3 +1,6 @@
+# Live Assignment link
+[Anurag's ECOM](https://my-ecom-app-ten.vercel.app/)
+
 ## Getting Started
 
 Local setup
@@ -29,8 +32,10 @@ Tech stack
 - Tailwind
 
 APIs used
-- Products list (https://fakestoreapi.com/products)
-- Product by id (https://fakestoreapi.com/products/${id})
-
-
+- Products list
+  <s>https://fakestoreapi.com/products</s>
+  https://dummyjson.com/products
+- Product by id
+  <s>https://fakestoreapi.com/products/${id})</s>
+  https://dummyjson.com/products/${id}
 
