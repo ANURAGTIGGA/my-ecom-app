@@ -2,6 +2,7 @@
 import { useCart } from "@/lib/storage";
 import Link from "next/link";
 import { useState } from "react";
+import { IoMdArrowBack } from "react-icons/io";
 
 export default function Checkout() {
   const { getTotal, clearCart } = useCart();
@@ -23,6 +24,9 @@ export default function Checkout() {
 
   return (
     <main className="container mx-auto p-8 max-w-2xl">
+      <Link href="/cart" className="text-blue-400 flex items-center gap-1.5">
+        <IoMdArrowBack /> Back to cart
+      </Link>
       <h1 className="text-2xl font-bold mb-8">Checkout</h1>
       <div className="bg-gray-100 p-6 rounded-lg mb-8">
         <h2 className="text-2xl mb-4">

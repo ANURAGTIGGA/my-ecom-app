@@ -2,12 +2,16 @@
 import { useCart } from "@/lib/storage";
 import CartItem from "@/components/feature/CartItem";
 import Link from "next/link";
+import { IoMdArrowBack } from "react-icons/io";
 
 export default function Cart() {
   const { cart, updateQuantity, getTotal } = useCart();
 
   return (
     <main className="container mx-auto p-8">
+      <Link href="/" className="text-blue-400 flex items-center gap-1.5">
+        <IoMdArrowBack /> Back to products
+      </Link>
       <h1 className="text-2xl font-bold mb-8">Shopping Cart</h1>
       {cart.length === 0 ? (
         <p>
